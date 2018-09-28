@@ -1,20 +1,19 @@
 <template>
   <div class="layout">
     <Header></Header>
-    <div class="w1170">
-      <router-view></router-view>
-    </div>
+    <router-view></router-view>
   </div>
+  
 </template>
 
 <script>
 import Header from '@/components/Header'
 
 export default {
-  name:'index',
+  name:'',
   data() {
     return {
-
+      articleData:[]
     }
   },
   components: {
@@ -27,7 +26,5 @@ export default {
 </script>
 
 <style scoped>
-.content{
-  width: 1170px;
-}
+
 </style>

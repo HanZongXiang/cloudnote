@@ -1,13 +1,15 @@
 <template>
   <header class="header">
     <div class="header-wrap">
-      <h1 class="title">云笔记</h1>
-      <el-button class="btn" @click="">写笔记</el-button>
+      <h1 class="title" @click="$router.push('/')" style="cursor:pointer">云笔记</h1>
+      <el-button class="btn" @click="handleWrite">写笔记</el-button>
     </div>
   </header>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name:'Header',
   data() {
@@ -15,6 +17,16 @@ export default {
 
     }
   },
+  methods:{
+    handleWrite() {
+      if (this.$store.state.userInfo.username) {
+        this.$router.push('/writeNote')
+      } else {
+        this.$message.info('登录后才能发布笔记')
+      }
+    }
+  },
+  
 }
 </script>
 

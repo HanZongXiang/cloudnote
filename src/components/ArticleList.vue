@@ -1,30 +1,37 @@
 <template>
   <div class="article-list">
-    <router-link :to="{name:'content',params: {id:item._id}}" class="item">
+    <router-link to="" class="item">
 
         <div class="top">
+
           <div class="img-wrap">
-            <img src="">
+            <img src="http://pbl.yaojunrong.com/avatar1.jpg">
           </div>
 
           <div class="item-msg">
 
             <div class="first">
-              <span class="author-name">
-                {{item.author}}
+              <span class="author-name">作者：
+                <!-- {{item.author}} -->
               </span>
-              <h2>{{item.title}}</h2>
+              <h2>标题：
+                <!-- {{item.title}} -->
+                </h2>
             </div>
 
             <div class="second">
-              <span class="second-item">浏览：{{item.looknums}}</span>
-              <span class="second-item">回复：{{item.commontnums}}</span>
-              <span class="second-item">分类：{{item.tags.map(tag => tag.name.join(' '))}}</span>
+              <span class="second-item">浏览：
+                <!-- {{item.looknums}} -->
+              </span>
+              <span class="second-item">回复：
+                <!-- {{item.commontnums}} -->
+              </span>
+              <span class="second-item">分类：</span>
             </div>
           </div>
         </div>
 
-        <div class="item-content" v-text="item.contentText"></div>
+        <div class="item-content" v-text="">笔记内容</div>
 
     </router-link>
   </div>
@@ -66,8 +73,9 @@ export default {
     padding-bottom:20px;
   }
   
-  .itop{
+  .top{
     display:flex;
+    padding-top:10px;
 
     .img-wrap{
       margin-right: 15px;
@@ -112,8 +120,10 @@ export default {
     .second-item {
       font-size: 14px;
       color:#333;
-      font-weight: bold;
       margin-right: 30px;
     }
+  }
+  .item-content {
+    margin-left:10px;
   }
 </style>

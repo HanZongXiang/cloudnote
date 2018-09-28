@@ -1,6 +1,6 @@
 <template>
-  <div class="banner-wrap">
-    <img src="/static/img/banner.jpg" alt="">
+  <div class="banner-wrap clearfix">
+    <img src="/static/imgs/banner.jpg">
     <div class="desc">十三亿人都会用的云笔记</div>
   </div>
 </template>

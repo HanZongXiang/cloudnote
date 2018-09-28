@@ -1,12 +1,12 @@
 <template>
   <div class="wrap clearfix">
 
-    <div class="login-box" v-if="!usermsg.username">
+    <div class="login-box" v-if="!userInfo.username">
       <div class="item">
-        <input type="text" placeholder="邮箱" v-model="email">
+        <input type="text" placeholder="邮箱" v-model="formData.email">
       </div>
       <div class="item">
-        <input type="password" placeholder="密码" v-model="password">
+        <input type="password" placeholder="密码" v-model="formData.password" @keyup.enter="handleLogin">
       </div>
       <div class="item">
         <el-button class="btn" type="primary" @click="handleLogin">登录</el-button>
@@ -18,13 +18,13 @@
 
     <div class="user-box" v-else>
       <div class="user-box-item user-icon">
-        <img src="">
+        <img :src="userInfo.avatar">
       </div>
       <div class="name-wrap">
-        萌新：{{usermsg.username}}
+        用户：{{userInfo.username}}
       </div>
       <div class="email-wrap">
-        email：{{usermsg.email}}
+        email：{{userInfo.email}}
       </div>
       <div>
         <el-button type="warning" class="btn-logout" @click="handleLogout">退出登录</el-button>
@@ -34,15 +34,13 @@
 </template>
 
 <script>
-import cookies from 'js-cookie'
+import {mapState} from 'vuex'
 
 export default {
   name:'UserBox',
   data() {
     return {
-      email:'',
-      password:'',
-      usermsg: {
+      formData: {
         username:'',
         email:'',
         avatar:''
@@ -54,25 +52,45 @@ export default {
   },
   methods: {
     handleLogin () {
-      let params = {
-        email:this.email,
-        password:this.password
-      }
-      console.log(process.env.NODE_ENV);
-      let basePath = process.env.NODE_ENV == 'development' ? '/api' : ''
+      // let params = {
+      //   email:this.formData.email,
+      //   password:this.formData.password
+      // }
 
-      this.$axios.post('/login',params).then(res => {
+      this.$axios.post('/login',this.formData).then(res => {
+        console.log(res);
         if (res.code == 200) {
-          this.usermsg = res.data.data
-          this.usermsg.avatar = process.env.NODE_ENV == 'develoment' ? '/api' + res.data.data.avatar : res.data.data.avatar
-          cookies.set('username',this.usermsg.username,{expires:14})
-          cookies.set('avatar',this.usermsg.avatar,{expires:14})
-          this.$message.success('登录成功，欢迎回来' + res.data.data.username)
+          this.$message.success(res.msg)
+          this.$store.commit('CHANGE_userInfo',res.userData)
+        }
+        else {
+           this.$message.error(res.msg)
+        }
+      })
+    },
+    handleLogout () {
+
+      this.$axios.delete('/logout').then(res => {
+        let userInfo = {
+            avatar:'',
+            eamil:'',
+            username:''
+          }
+
+        if (res.code == 200){
+          this.$message.success(res.msg)
+          this.$store.commit('CHANGE_userInfo',userInfo)  //清空vuex中存储的用户信息
+          this.$router.push('/index')
         } else {
-          this.$message.error(res.data.msg)
+          this.$store.commit('CHANGE_userInfo',userInfo)
+          this.$message.info(res.msg)
+          this.$router.push('/index')
         }
       })
     }
+  },
+  computed: {
+    ...mapState(['userInfo'])
   }
 }
 </script>
@@ -81,7 +99,7 @@ export default {
   .wrap {
     box-sizing: border-box;
     width: 360px; 
-    background: #f7f5f5;
+    background: #fff;
     border-radius: 4px;
     padding:25px 30px;
   }
@@ -123,13 +141,18 @@ export default {
       text-align: center;
       margin-top: 20px;
       font-size: 16px;
-      color:#333;
+      color:#222;
       font-weight: normal;
       line-height: 36px;
+      font-family: serif;
+    }
+    .email-wrap{
+      margin-top: 5px;
     }
     .btn-logout {
       width: 100%;
       margin-top: 10px;
+      margin-bottom: 10px;
     }
   }
 </style>

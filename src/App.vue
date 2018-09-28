@@ -1,11 +1,12 @@
 <template>
   <div id="app">
-    <Layout></Layout>
+    <!-- <Layout></Layout> -->
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Layout from '@/components/index'
+import Layout from './views/layout'
 
 export default {
   name: 'App',
@@ -19,6 +20,9 @@ export default {
 * {
   margin:0;
   padding:0;
+}
+body{
+  background-color: #f1f1f1;
 }
 .w1170 {
   width: 1170px;
