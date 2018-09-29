@@ -1,37 +1,39 @@
 <template>
-  <div class="article-list">
-    <router-link to="" class="item">
+  <div class="article-list" v-show="this.$store.state.userInfo.username">
+    <router-link :to="{name:'detail',params:{id:item._id}}" class="item" v-for="(item,index) in currentArticles" :key="index">
 
         <div class="top">
 
           <div class="img-wrap">
-            <img src="http://pbl.yaojunrong.com/avatar1.jpg">
+            <img :src="item.author.avatar">
           </div>
 
           <div class="item-msg">
 
             <div class="first">
-              <span class="author-name">作者：
-                <!-- {{item.author}} -->
+              <span class="author-name">
+                {{item.author.username}}
               </span>
-              <h2>标题：
-                <!-- {{item.title}} -->
-                </h2>
+              <h2>
+                {{item.title}}
+              </h2>
             </div>
 
             <div class="second">
               <span class="second-item">浏览：
-                <!-- {{item.looknums}} -->
+                {{item.readnums}}
               </span>
               <span class="second-item">回复：
-                <!-- {{item.commontnums}} -->
+                {{item.replynums}}
               </span>
-              <span class="second-item">分类：</span>
+              <span class="second-item">分类：
+                {{item.category.name}}
+              </span>
             </div>
           </div>
         </div>
 
-        <div class="item-content" v-text="">笔记内容</div>
+        <div class="item-content" v-text="item.contentText">笔记内容</div>
 
     </router-link>
   </div>
@@ -47,7 +49,13 @@ export default {
       currentArticles: []
     }
   },
-  watch: {},
+  watch: {
+    articles (val) {
+      this.currentArticles = val.map(item => {
+        return item
+      })
+    }
+  },
   components: {
 
   },
@@ -64,6 +72,7 @@ export default {
     border-radius: 4px;
     padding:2px 20px;
     background:#fff;
+    transform: translateX(-10px)
   }
 
   .item{
@@ -94,13 +103,13 @@ export default {
     .author-name {
       color:#409eff;
       font-weight: bold;
-      padding-right: 8px;
+      padding-right: 15px;
       border-right: 1px solid #000;
     }
 
     h2 {
-      font-size: 18px;
-      font-weight: bold;
+      font-size: 16px;
+      font-weight: 600;
       margin-left:15px;
     }
   }
@@ -124,6 +133,6 @@ export default {
     }
   }
   .item-content {
-    margin-left:10px;
+    margin-left:85px;
   }
 </style>

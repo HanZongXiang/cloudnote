@@ -8,7 +8,7 @@
     
   </div>
   <div class="bottom-box">
-    <ArticleList></ArticleList>
+    <ArticleList :articles="articleData"></ArticleList>
   </div>
 </div>
   
@@ -23,7 +23,7 @@ export default {
   name:'index',
   data() {
     return {
-
+      articleData: []
     }
   },
   components: {
@@ -32,7 +32,14 @@ export default {
     ArticleList
   },
   methods: {
-
+    getArticleData() {
+      this.$axios.get('/article').then(res => {
+        this.articleData = res.data
+      })
+    }
+  },
+  created() {
+    this.getArticleData()
   }
 }
 </script>

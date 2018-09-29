@@ -1,12 +1,13 @@
 <template>
-  <div class="radios">
-    <label class="label" v-for="(item,index) in options">
+  <div class="radios-wrap">
+    <label class="label fl" v-for="(item,index) in options">
       
+      <input type="radio" v-model="currentValue" class="radios" :value="item._id" :key="index">
+
       <div class="title-wrap">
-        <span>{{item.name}}</span>
+        <span class="radios-title">{{item.name}}</span>
       </div>
 
-      <input type="radio" v-model="currentValue" class="radios" :value="item._id" :key="index">
     </label>
   </div>
 </template>
@@ -43,5 +44,21 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss">
+  .radios {
+    display: none;
+  }
+  .title-wrap {
+    padding:10px 15px;
+    font-size: 12px;
+    color:#444;
+    border:1px solid #f1f1f1;
+    border-radius: 4px;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+  .radios:checked + .title-wrap {
+    color:#fff;
+    background: #409eff;
+  }
 </style>

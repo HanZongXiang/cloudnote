@@ -4,7 +4,7 @@
       <div class="title">标题</div>
 
       <div class="input-wrap">
-        <el-input class="item"></el-input>
+        <el-input class="item" v-model="formData.title"></el-input>
       </div>
 
       <div class="title">内容</div>
@@ -17,17 +17,17 @@
       </quill-editor>
 
       <div class="category clearfix">
-        <span class="tag">分类:
+        <span class="tag fl">分类:
           
         </span>
 
         <div class="fl">
-          <radiosCom :options="categoryOptions" v-model="selectedCategory"></radiosCom>
+          <radiosCom :options="categoryOptions" v-model="formData.category"></radiosCom>
         </div>
       </div>
 
       <div class="btn-wrap">
-        <el-button type="primary">保存提交</el-button>
+        <el-button type="primary" @click="handleSubmit">保存提交</el-button>
       </div>
     </div>
     
@@ -47,9 +47,10 @@ export default {
   data() {
     return {
       formData: {
+        title:'',
         content:'',
         contentText:'',
-        selectedCategory:''
+        category:''
       },
       categoryOptions:[],
       editorOption: {
@@ -91,6 +92,16 @@ export default {
           this.$message.error(res.msg)
         }
       })
+    },
+    handleSubmit() {
+      this.$axios.post('/article',this.formData).then(res => {
+        if (res.code == 200) {
+          this.$message.success(res.msg)
+          this.$router.push('/index')
+        } else {
+          this.$message.info(res.msg)
+        }
+      })
     }
   },
   created() {
@@ -122,12 +133,12 @@ export default {
     .category {
       color:#409eff;
       font-weight: 600;
-      margin:8px 0;
+      margin:18px 0 8px;
     }
 
     .category .tag {
-      margin-right: 5px;
-      float: left;
+      margin-right: 10px;
+      transform: translateY(8px)
     }
 
     .btn-wrap {

@@ -73,7 +73,7 @@ export default {
       this.$axios.delete('/logout').then(res => {
         let userInfo = {
             avatar:'',
-            eamil:'',
+            email:'',
             username:''
           }
 

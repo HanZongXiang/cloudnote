@@ -9,7 +9,9 @@ const components = {
   layout:() => import('@/views/layout'),
   index:() => import('@/views/index/index'),
   register:() => import('@/views/register/register'),
-  writeNote:() => import('@/views/writeNote/writeNote')
+  writeNote:() => import('@/views/writeNote/writeNote'),
+  detail:() => import('@/views/detail/detail'),
+  searchNote:() => import('@/views/searchNote/searchNote')
 }
 
 let router = new Router({
@@ -43,6 +45,22 @@ let router = new Router({
             title:'编写云笔记'
           },
           component:components.writeNote
+        },
+        {
+          path:'detail/:id',
+          name:'detail',
+          meta: {
+            title:'笔记详情页'
+          },
+          component:components.detail
+        },
+        {
+          path:'searchNote',
+          name:'searchNote',
+          meta: {
+            title:'笔记搜索页'
+          },
+          component: components.searchNote
         }
       ]
     }
