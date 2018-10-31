@@ -9,7 +9,8 @@ const store = new Vuex.Store({
     userInfo:{
       email:'',
       avatar:'',
-      username:''
+      username:'',
+      id: ''
     }
   },
   mutations: {

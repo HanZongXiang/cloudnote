@@ -28,6 +28,9 @@ body{
   width: 1170px;
   margin:0 auto;
 }
+ul,ol {
+  list-style: none;
+}
 .li {
   list-style: none;
 }
@@ -41,5 +44,28 @@ body{
   content:'';
   display:block;
   clear: both;
+}
+/* 表格全局样式 */
+.table-item-img {
+  width: 80px;
+  height: 80px;
+}
+.el-table {
+  text-align: center;
+}
+.el-table th > .cell {
+  text-align: center;
+}
+.el-table td > .cell {
+  text-align: center;
+}
+
+.page-wrap {
+  margin-top: 15px;
+  margin-left: 50px;
+}
+
+.search .el-card {
+  min-height: calc(100vh - 160px);
 }
 </style>

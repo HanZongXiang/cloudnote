@@ -4,8 +4,10 @@
       <h1 class="title fl" @click="$router.push('/')" style="cursor:pointer">云笔记</h1>
       
       <div class="btn-wrap fr">
-        <el-button class="btn" @click="handleWrite">写笔记</el-button>
-        <el-button class="btn" @click="handleSearch">查找笔记</el-button>
+        <el-button class="btn" @click="handleWrite">
+          写笔记
+        </el-button>
+        
       </div>
       
     </div>
@@ -30,13 +32,6 @@ export default {
         this.$message.info('登录后才能发布笔记')
       }
     },
-    handleSearch() {
-      if (this.$store.state.userInfo.username) {
-        this.$router.push('/searchNote')
-      } else {
-        this.$message.info('登录后才能查找笔记')
-      }
-    },
   },
   
 }
@@ -45,6 +40,7 @@ export default {
 <style scoped lang="scss">
   .header{
     height: 50px;
+    // width: 100vw;
     background: #409eff;
 
     .header-wrap{

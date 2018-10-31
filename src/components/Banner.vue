@@ -1,7 +1,7 @@
 <template>
   <div class="banner-wrap clearfix">
     <img src="/static/imgs/banner.jpg">
-    <div class="desc">十三亿人都会用的云笔记</div>
+    <div class="desc">火星人都会用的云笔记</div>
   </div>
 </template>
 

@@ -9,7 +9,7 @@
       <input type="text" placeholder="邮箱" v-model="formData.email">
     </div>
     <div class="item">
-      <input type="password" placeholder="密码" v-model="formData.password" @keyup.enter.native="handleRegister">
+      <input type="password" placeholder="密码" v-model="formData.password" @keyup.enter="handleRegister">
     </div>
     <div class="item">
       <el-button type="primary" class="btn" @click="handleRegister">注册</el-button>
@@ -34,12 +34,6 @@ export default {
   },
   methods: {
     handleRegister() {
-      // let params = {
-      //   username:this.formData.username,
-      //   email:this.formData.email,
-      //   password:this.formData.password
-      // }
-
       this.$axios.post('/register',this.formData).then(res => {
         if (res.code == 200) {
           this.$message.success(res.msg)

@@ -38,6 +38,10 @@ const xhr = {
 
   delete (url,data,config) {
     return this.fetch(url,data,config,'delete')
+  },
+
+  patch(url, data, config) {
+    return this.fetch(url, data, config, 'patch')
   }
 }
 

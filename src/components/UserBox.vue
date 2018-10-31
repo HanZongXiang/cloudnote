@@ -1,24 +1,17 @@
 <template>
   <div class="wrap clearfix">
-
-    <div class="login-box" v-if="!userInfo.username">
-      <div class="item">
-        <input type="text" placeholder="邮箱" v-model="formData.email">
-      </div>
-      <div class="item">
-        <input type="password" placeholder="密码" v-model="formData.password" @keyup.enter="handleLogin">
-      </div>
-      <div class="item">
-        <el-button class="btn" type="primary" @click="handleLogin">登录</el-button>
-      </div>
-      <div class="item">
-        <el-button class="btn" @click="$router.push('/register')">注册</el-button>
-      </div>
-    </div>
-
-    <div class="user-box" v-else>
+    <div class="user-box">
       <div class="user-box-item user-icon">
-        <img :src="userInfo.avatar">
+        <el-dropdown trigger="hover" @command="handleCommand">
+          <span class="el-dropdown-link">
+            <img :src="userInfo.avatar" class="avatar">
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="1">修改信息</el-dropdown-item>
+            <el-dropdown-item command="2">用户中心</el-dropdown-item>
+            <el-dropdown-item command="3">查找笔记</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
       </div>
       <div class="name-wrap">
         用户：{{userInfo.username}}
@@ -40,57 +33,63 @@ export default {
   name:'UserBox',
   data() {
     return {
-      formData: {
-        username:'',
-        email:'',
-        avatar:''
-      }
+      
     }
   },
   components: {
 
   },
   methods: {
-    handleLogin () {
-      // let params = {
-      //   email:this.formData.email,
-      //   password:this.formData.password
-      // }
-
-      this.$axios.post('/login',this.formData).then(res => {
-        console.log(res);
-        if (res.code == 200) {
-          this.$message.success(res.msg)
-          this.$store.commit('CHANGE_userInfo',res.userData)
-        }
-        else {
-           this.$message.error(res.msg)
-        }
-      })
-    },
     handleLogout () {
-
       this.$axios.delete('/logout').then(res => {
         let userInfo = {
             avatar:'',
             email:'',
-            username:''
+            username:'',
+            id: ''
           }
 
         if (res.code == 200){
           this.$message.success(res.msg)
           this.$store.commit('CHANGE_userInfo',userInfo)  //清空vuex中存储的用户信息
-          this.$router.push('/index')
+          this.$router.push('/login')
         } else {
           this.$store.commit('CHANGE_userInfo',userInfo)
           this.$message.info(res.msg)
-          this.$router.push('/index')
+          this.$router.push('/login')
         }
+      })
+    },
+    handleCommand(command) {
+      if (command == 1) {
+        const id = this.$store.state.userInfo.id
+        this.$router.push(`/layout/userEdit/${id}`)
+      } else if (command == 2) {
+        this.$router.push('/layout/userCenter')
+      } else if (command == 3) {
+        this.$router.push('/layout/searchNote')
+      }
+    },
+    refreshUserData() {
+      const id = this.$store.state.userInfo.id 
+      this.$axios.get(`/user/${id}`).then(res => {
+        let userInfo = {
+          avatar:res.data.avatar,
+          email:res.data.email,
+          username:res.data.username,
+          id: res.data._id
+        }
+        this.$store.commit('CHANGE_userInfo',userInfo)
       })
     }
   },
   computed: {
     ...mapState(['userInfo'])
+  },
+  created() {
+    if (this.$store.state.userInfo.username) {
+      this.refreshUserData()
+    }
   }
 }
 </script>
@@ -104,27 +103,7 @@ export default {
     padding:25px 30px;
   }
 
-  // .login-box {
-  //   float: right;
-  //   width: 360px;
-  // }
-
-  .item {
-    margin-top: 30px;
-
-    .btn {
-      width: 100%;
-    }
-    //父选择器 
-    & > input {
-      box-sizing: border-box;
-      width:100%;
-      border:1px solid #f1f1f1;
-      border-radius: 4px;
-      padding:14px;
-      outline: none;
-    }
-  }
+  
   .user-box {
     padding-top: 30px;
 

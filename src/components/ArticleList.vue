@@ -1,5 +1,5 @@
 <template>
-  <div class="article-list" v-show="this.$store.state.userInfo.username">
+  <div class="article-list">
     <router-link :to="{name:'detail',params:{id:item._id}}" class="item" v-for="(item,index) in currentArticles" :key="index">
 
         <div class="top">
@@ -24,10 +24,10 @@
                 {{item.readnums}}
               </span>
               <span class="second-item">回复：
-                {{item.replynums}}
+                {{item.comment.length}}
               </span>
               <span class="second-item">分类：
-                {{item.category.name}}
+                <el-tag>{{item.category.name}}</el-tag>
               </span>
             </div>
           </div>
@@ -80,11 +80,12 @@ export default {
     color:#333;
     display:block;
     padding-bottom:20px;
+    border-bottom: 1px dashed #e1e1e1;
   }
   
   .top{
     display:flex;
-    padding-top:10px;
+    padding-top:20px;
 
     .img-wrap{
       margin-right: 15px;
@@ -93,6 +94,8 @@ export default {
       img {
         display: block;
         width: 100%;
+        height: 70px;
+        border-radius: 50%;
       }
     }
   }
@@ -133,6 +136,9 @@ export default {
     }
   }
   .item-content {
+    text-indent: 1em;
+    margin-top: 20px;
     margin-left:85px;
+    font-size: 14px;
   }
 </style>
