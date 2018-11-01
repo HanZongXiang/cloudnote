@@ -111,7 +111,7 @@ export default {
       this.$axios.post('/article',this.formData).then(res => {
         if (res.code == 200) {
           this.$message.success(res.msg)
-          this.$router.push('/index')
+          this.$router.push('/layout/index')
         } else {
           this.$message.info(res.msg)
         }
@@ -127,7 +127,7 @@ export default {
       const {id} = this.$route.params
       this.$axios.patch(`/article/${id}`,this.formData).then(res => {
         this.$message.success(res.msg)
-        this.$router.push('/index')
+        this.$router.push('/layout/index')
       }).catch(err => {
         this.$message.error('请求有误')
       })

@@ -27,7 +27,7 @@ export default {
   methods:{
     handleWrite() {
       if (this.$store.state.userInfo.username) {
-        this.$router.push('/writeNote')
+        this.$router.push('/layout/writeNote')
       } else {
         this.$message.info('登录后才能发布笔记')
       }

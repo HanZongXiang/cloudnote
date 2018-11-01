@@ -269,11 +269,12 @@ export default {
       margin:10px 10px 15px;
       font-size: 22px;
       font-weight: normal;
+      text-align: center;
     }
 
     .content {
-      margin-top: 5px;
-      margin-left:10px;
+      margin-top: 25px;
+      margin-left:70px;
     }
 
     .card-wrap {
@@ -348,6 +349,14 @@ export default {
   }
   pre {
     margin: 10px 0;
+    color: #333;
+    background: #f8f8f8;
+    font-size: 11px;
+    line-height: 1.75;
+    font-family: Menlo,Monaco,Consolas,Courier New,monospace;
+    padding: 18px 15px 12px;
+    border-radius: 2px;
+    width: 900px;
   }
   img {
     max-width: 1000px;
